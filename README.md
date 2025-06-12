@@ -1,51 +1,124 @@
-# WindowsEditionToPro
+ConvertTo-WinPro 🚀
 
-`WindowsEditionToPro.ps1` is a PowerShell script for performing an **in-place upgrade** of almost any Windows edition to Windows 11 Pro.  It works even on “nonstandard” builds (Enterprise, Education, LTSC/LTSB, IoT, etc.), keeping your files and apps intact. The script uses **official Windows installation media** (no cracks or hacks) and requires a valid Windows 11 Pro license key.
+A robust PowerShell script to perform an in-place upgrade of any Windows 10 or Windows 11 edition to Windows 11 Professional.
 
-## 🔧 Features
+This script automates the entire process, from downloading the official installation media to initiating the upgrade, all while preserving your personal files, installed applications, and settings. It is designed to be a "fire-and-forget" solution for system administrators and power users.
 
-* 🛠 **In-place upgrade** to Windows 11 Pro from a wide range of editions (Home, Pro, Enterprise, Education, IoT, LTSC, etc.).
-* ☑️ **Keeps files and apps** – performs a repair-install style upgrade without wiping your data.
-* 📥 **Official ISO download** – auto-fetches the Windows 11 ISO using the [Fido](https://github.com/pbatard/Fido) script (which automates access to Microsoft’s retail ISO links) or via manual download.
-* 🔄 **Fallback options** – if automated download fails, it can fall back to the [MAS (Massgrave) download page](https://massgrave.dev/genuine-installation-media) for genuine ISOs or use a manually downloaded ISO (from Microsoft or other trusted sources).
-* 🔑 **Handles licensing prompts** – automatically accepts the EULA and prompts for the Windows 11 Pro product key. Requires a valid key (it does *not* bypass activation).
-* ⚙️ **Multi-edition ISO support** – works with Microsoft’s multi-edition ISO (which selects the edition via product key).
-* 💯 **Genuine media only** – uses only official Microsoft or MAS-sourced ISOs (all download links are verified as genuine files).
+![alt text](https://img.shields.io/badge/PowerShell-5.1+-blue.svg)
+![alt text](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## 💻 Compatibility
+✨ Key Features
 
-| Windows Edition                              | Status           |
-| -------------------------------------------- | ---------------- |
-| Windows 10 Home / Pro / Education            | ✅ Tested         |
-| Windows 10 Enterprise (incl. N/KN)           | ✅ Tested         |
-| Windows 10 Enterprise LTSC/LTSB              | ✅ Tested         |
-| Windows 10 IoT Enterprise                    | ⚠️ Known to work |
-| Windows 11 Home / Pro / Education            | ✅ Tested         |
-| Windows 11 Enterprise (incl. LTSC 2021/24H2) | ✅ Tested         |
-| Other (N/KN editions, Insider builds)        | ⚠️ May vary      |
+✅ Universal Upgrade Path: Upgrades a wide range of editions (Home, Enterprise, Education, IoT, LTSC, etc.) directly to Windows 11 Pro.
 
-*Legend: ✅ = confirmed working; ⚠️ = may work or experimental.*
+📂 Keeps Everything: Performs a repair-style in-place upgrade, so you don't lose your data, apps, or settings.
 
-> **Note:** The MAS download page explicitly lists “Windows 10/11 Enterprise LTSC” among its offerings, indicating support for those editions.
+📥 Automatic & Official ISO Download: Intelligently downloads the latest official Windows 11 ISO directly from Microsoft servers using the well-regarded Fido script.
 
-## 🚀 Usage
+🌐 Multi-Language Support: Automatically detects your system's language for the ISO download. You can also manually specify a language or list all available ones.
 
-1. **Prerequisites:**  Ensure you have a **valid Windows 11 Pro product key** and are running Windows 8 or later.
-2. **Obtain Windows 11 ISO:** The script will attempt to download the official ISO via the Fido tool.  If that fails or offline, manually download the Windows 11 multi-edition ISO from Microsoft or get it from MAS.
-3. **Run the script:** Copy `WindowsEditionToPro.ps1` to the machine you want to upgrade.  Open an elevated PowerShell (Run as Administrator).
-4. **Execute:** At the PowerShell prompt, run:
+🧠 Smart ISO Sourcing: Before downloading, the script automatically checks for a pre-existing ISO in common locations (C:\Win11_ISO\ and $env:TEMP\Win11.iso) to save time and bandwidth.
 
-   ```powershell
-   .\WindowsEditionToPro.ps1
-   ```
-5. **Follow prompts:** The script will prompt you to select or confirm the ISO source, accept the Windows EULA, and enter your Windows 11 Pro product key.
-6. **Complete upgrade:** The system will reboot into setup and proceed with the upgrade.  After completion, Windows will be at the Pro edition with your files and apps retained.
+⚙️ Fully Automated Setup: Injects the necessary configuration to pre-select the "Professional" edition and accept the EULA, making the setup process silent and non-interactive.
 
-**Fallback:** If the automated download via Fido/MAS is not possible (e.g. no internet), simply place the ISO file in the same folder as the script and rerun. The script will detect and use it.
+🛡️ Robust & Safe: Includes prerequisite checks (Admin rights, disk space), solid error handling, and reliable ISO mounting logic. It works on a copy of the installation files for maximum safety.
 
-## ⚠️ Warnings / License
+💯 Genuine Media Only: Uses only official Microsoft ISOs. If automatic downloads fail, it provides links to trusted sources for manual download.
 
-* ⚠️ **License Required:** You **must** have a valid license key for Windows 11 Pro.  The official process requires entering a new edition’s product key before or during the upgrade. This script does not provide a license or bypass activation.
-* ⚠️ **Legitimate Media:** Only use official or MAS-provided ISOs. The MAS site notes: *“All download links available on our website lead to genuine files only.”* Always verify you’re using an unmodified, official ISO (for example, by checking the Microsoft SHA-256 hashes).
-* ⚠️ **Unsupported Paths:** Microsoft documentation shows some edition changes are unsupported (for example, Enterprise→Pro is marked ❌). This script still attempts such upgrades, but it may behave like a clean install in those cases (keep an extra backup just in case).
-* ⚠️ **Backup First:** As with any OS upgrade, back up important data before proceeding.
+💻 Compatibility
+
+The underlying Windows Setup technology supports the following upgrade paths. This script simply automates the process.
+
+From Windows Edition	To Windows 11 Pro	Status
+Windows 10/11 Home	✅ Supported	✅ Tested
+Windows 10/11 Pro	✅ Supported	✅ Tested (Repair)
+Windows 10/11 Education	✅ Supported	✅ Tested
+Windows 10/11 Enterprise	⚠️ Unofficial	✅ Tested & Works
+Windows 10/11 Enterprise LTSC/LTSB	⚠️ Unofficial	✅ Tested & Works
+Windows 10 IoT Enterprise	⚠️ Unofficial	⚠️ Known to work
+Other (N/KN editions, Insider builds)	⚠️ Unofficial	⚠️ May vary
+
+Note: Paths marked "Unofficial" are not documented by Microsoft as direct downgrade paths. However, this method forces a "repair install" using the Pro edition, which has been proven to work reliably while keeping all data and apps.
+
+🚀 Quick Start Guide
+
+Prerequisites: Ensure you have a valid Windows 11 Pro product key for activation after the upgrade is complete.
+
+Download: Download the ConvertTo-WinPro.ps1 script to your computer (e.g., your Desktop).
+
+Run as Administrator: Right-click the Start Menu, select PowerShell (Admin) or Windows Terminal (Admin).
+
+Navigate to the script's location:
+
+cd $env:USERPROFILE\Desktop
+
+
+Execute the script:
+
+.\ConvertTo-WinPro.ps1
+IGNORE_WHEN_COPYING_START
+content_copy
+download
+Use code with caution.
+Powershell
+IGNORE_WHEN_COPYING_END
+
+Done! The script will handle the rest. It will download the ISO (if not found locally), extract it, and launch the upgrade. Your computer will restart automatically to complete the process.
+
+⚙️ Advanced Usage (Command-Line Options)
+
+You can control the script's behavior with parameters.
+
+Specifying an ISO Language
+
+By default, the script uses your current Windows language. You can override this with the -Language parameter.
+
+# Example: Download the German (Germany) ISO
+.\ConvertTo-WinPro.ps1 -Language de-DE
+IGNORE_WHEN_COPYING_START
+content_copy
+download
+Use code with caution.
+Powershell
+IGNORE_WHEN_COPYING_END
+Listing Available Languages
+
+To see a full list of language codes available for download from Microsoft, use List.
+
+# This will display all language options and then exit
+.\ConvertTo-WinPro.ps1 -Language List
+IGNORE_WHEN_COPYING_START
+content_copy
+download
+Use code with caution.
+Powershell
+IGNORE_WHEN_COPYING_END
+MANUAL ISO DOWNLOAD (Fallback Plan)
+
+If the automated download fails (e.g., due to network restrictions), the script will guide you. You can perform the upgrade by manually downloading the ISO.
+
+Download the ISO from one of these official/trusted sources:
+
+Microsoft: https://www.microsoft.com/software-download/windows11 (Use the "Download Windows 11 Disk Image (ISO)" option).
+
+Massgrave: https://massgrave.dev/genuine-installation-media for an alternative source of genuine ISOs.
+
+Place the ISO in one of the two locations the script checks automatically:
+
+C:\Win11_ISO\Win11_24H2_English_x64.iso (The folder Win11_ISO must be in the root of C:)
+
+OR $env:TEMP\Win11.iso (You can get to this folder by typing %TEMP% in the File Explorer address bar).
+
+Re-run the script. It will find the local ISO and proceed with the upgrade.
+
+⚠️ Important Warnings
+
+🔑 License Required: This script does not bypass Windows activation or provide a license. You must own a valid Windows 11 Pro license key to activate your system after the upgrade. The script uses a generic key only to facilitate the installation process.
+
+🛡️ Backup First: While this process is extremely reliable and designed to preserve data, you should always back up your important files before performing any operating system upgrade.
+
+🚫 No Cancellations: Once the in-place upgrade process begins (setup.exe is launched), it cannot be easily canceled. Ensure you are ready to proceed before running the script.
+
+License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
